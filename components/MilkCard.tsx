@@ -71,14 +71,21 @@ export default function MilkCard({ children, className = '' }: MilkCardProps) {
 
       {/* Recipiente do Líquido Plano (Gira com o Giroscópio) */}
       <motion.div 
-        className="absolute left-[-50%] top-[25%] w-[200%] h-[200%] bg-white pointer-events-none z-0"
+        className="absolute bg-white/10 backdrop-blur-md pointer-events-none z-0"
         style={{ 
           // Linha sutil no topo para marcar a superfície do líquido
-          borderTop: '2px solid rgba(255, 255, 255, 0.9)' 
+          borderTop: '2px solid rgba(255, 255, 255, 0.4)',
+          // Aumentamos o tamanho de 200% para 400% para esconder as pontas ("quadrados")
+          width: '400%',
+          height: '400%',
+          left: '-150%',
+          top: '15%',
+          // Previne falhas gráficas no Safari/iOS ao renderizar o blur girando
+          willChange: 'transform'
         }}
         animate={{ 
           rotate: tilt,
-          y: Math.abs(tilt) * 1.5 // Faz o líquido subir nas laterais compensando a rotação
+          y: Math.abs(tilt) * 2 // Sobe um pouco mais rápido nas laterais para compensar
         }}
         transition={{ type: 'spring', damping: 20, stiffness: 45 }}
       />

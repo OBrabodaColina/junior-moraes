@@ -1,18 +1,20 @@
 import React from 'react';
 import Image from 'next/image';
 
+// 1. Importação estática da foto do Junior
+// (Confirme se a extensão é .jpeg ou .jpg na sua pasta public!)
+import juniorImg from '../public/junior-otimizado.jpeg';
+
 export default function SobreFundador() {
   return (
     <section className="bg-stone-50 py-24 px-6 border-t border-stone-200">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
         
-        {/* Foto do Fundador: Apresentação Livre, sem cortes e sem quadro */}
         <div className="w-full md:w-5/12 flex justify-center">
           <div className="relative w-full max-w-sm drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)] transition-transform duration-500 hover:scale-[1.02]">
             <Image 
-              src="/junior-otimizado.jpeg" 
+              src={juniorImg} // 2. Trocamos pela variável importada
               alt="João Batista de Moraes Junior" 
-              // Usamos width e height para manter a proporção real da foto sem cortar o chapéu
               width={600}
               height={800}
               className="w-full h-auto rounded-3xl filter contrast-110 brightness-105"
@@ -20,7 +22,7 @@ export default function SobreFundador() {
           </div>
         </div>
 
-        {/* Copywriting: Autoridade e Humanização */}
+        {/* ... (O resto do texto continua igualzinho, não precisa mudar nada aqui para baixo) ... */}
         <div className="w-full md:w-7/12 text-left">
           <h2 className="text-sm font-bold tracking-widest text-green-700 uppercase mb-3">
             Conheça Quem Está Por Trás
