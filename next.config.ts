@@ -1,15 +1,17 @@
 import type { NextConfig } from "next";
 
-// ATENÇÃO: Substitua 'nome-do-repositorio' pelo nome exato que você vai dar ao seu repositório no GitHub.
-const repoName = "junior-moraes"; 
+const repoName = "junior-moraes";
+// Verifica se estamos rodando o build para produção
+const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig: NextConfig = {
   output: "export",
   images: {
-    unoptimized: true, // Necessário para imagens funcionarem no GitHub Pages
+    unoptimized: true, 
   },
-  basePath: `/${repoName}`,
-  assetPrefix: `/${repoName}`,
+  // Aplica o basePath e assetPrefix apenas no GitHub Pages
+  basePath: isProd ? `/${repoName}` : "",
+  assetPrefix: isProd ? `/${repoName}` : "",
 };
 
 export default nextConfig;
