@@ -19,8 +19,8 @@ export default function MilkCard({ children, className = '' }: MilkCardProps) {
       let beta = event.beta || 0;
       
       // LIMITADOR DO LÍQUIDO: Permitimos inclinação de apenas 12 graus 
-      if (gamma > 12) gamma = 12;
-      if (gamma < -12) gamma = -12;
+      if (gamma > 8) gamma = 8;
+      if (gamma < -8) gamma = -8;
       
       setTilt(-gamma); 
 
