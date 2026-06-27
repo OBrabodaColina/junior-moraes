@@ -12,23 +12,28 @@ export default function MilkCard({ children, className = '' }: MilkCardProps) {
   const [tilt, setTilt] = useState(0);
 
   useEffect(() => {
+    // Sensor de movimento do celular (Giroscópio / Acelerômetro)
     const handleOrientation = (event: DeviceOrientationEvent) => {
-      let gamma = event.gamma || 0; 
+      let gamma = event.gamma || 0; // Captura a inclinação lateral do celular
+      
+      // Limitamos o ângulo máximo para o leite não virar completamente de cabeça para baixo
       if (gamma > 45) gamma = 45;
       if (gamma < -45) gamma = -45;
+      
       setTilt(gamma);
     };
 
+    // Sensor de mouse para manter o efeito funcionando em computadores
     const handleMouseMove = (event: MouseEvent) => {
       const x = (event.clientX / window.innerWidth - 0.5) * 45;
       setTilt(x);
     };
 
-    window.addEventListener('deviceorientation', handleOrientation);
+    window.addEventListener('deviceorientation', handleOrientation, true);
     window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
-      window.removeEventListener('deviceorientation', handleOrientation);
+      window.removeEventListener('deviceorientation', handleOrientation, true);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
@@ -41,14 +46,14 @@ export default function MilkCard({ children, className = '' }: MilkCardProps) {
       transition={{ duration: 0.6 }}
       className={`relative overflow-hidden rounded-3xl shadow-2xl border border-white/40 bg-white/30 backdrop-blur-md ${className}`}
     >
-      {/* O Leite se movendo no fundo da caixa */}
+      {/* O Leite pela metade! Começa no top-[50%] (meio da caixa) */}
       <motion.div 
-        className="absolute -bottom-[30%] left-[-50%] w-[200%] h-[150%] bg-white/70 rounded-[40%] pointer-events-none"
+        className="absolute left-[-50%] top-[50%] w-[200%] h-[200%] bg-white/80 rounded-[45%] pointer-events-none"
         animate={{ 
           rotate: tilt, 
-          y: 100 + Math.abs(tilt) * 1.5
         }}
-        transition={{ type: 'spring', damping: 20, stiffness: 60 }}
+        // Física da mola para parecer que a água está "pesada" e balançando
+        transition={{ type: 'spring', damping: 15, stiffness: 45 }}
       />
       
       {/* O Texto e Conteúdo (Sempre acima do leite) */}

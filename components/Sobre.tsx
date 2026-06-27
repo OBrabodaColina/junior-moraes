@@ -3,6 +3,8 @@ import Image from 'next/image';
 import MilkCard from './MilkCard';
 
 export default function Sobre() {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
   return (
     <section className="py-20 px-6">
       <MilkCard className="max-w-5xl mx-auto p-8 md:p-12">
@@ -19,14 +21,13 @@ export default function Sobre() {
           <div className="relative bg-white p-4 pb-20 w-full max-w-sm shadow-xl border border-stone-200 transform -rotate-2 transition-transform duration-300 hover:rotate-0 hover:-translate-y-2 hover:shadow-2xl hover:z-10">
             <div className="relative h-64 md:h-72 w-full overflow-hidden bg-stone-100 border border-stone-200">
               <Image 
-                src="/vaca-curral.jpeg" 
+                src={`${basePath}/vaca-curral.jpeg`} 
                 alt="Vaca holandesa no curral" 
                 fill 
                 className="object-cover" 
               />
             </div>
             <div className="absolute bottom-6 left-0 w-full text-center">
-              {/* Usando uma fonte cursiva padrão do sistema para imitar caneta */}
               <p className="text-2xl font-bold text-stone-800" style={{ fontFamily: '"Comic Sans MS", "Chalkboard SE", cursive, sans-serif' }}>
                 Funcionária do Mês
               </p>
@@ -38,14 +39,13 @@ export default function Sobre() {
           <div className="relative bg-white p-4 pb-20 w-full max-w-sm shadow-xl border border-stone-200 transform rotate-3 transition-transform duration-300 hover:rotate-0 hover:-translate-y-2 hover:shadow-2xl hover:z-10 mt-8 md:mt-0">
             <div className="relative h-64 md:h-72 w-full overflow-hidden bg-stone-100 border border-stone-200">
               <Image 
-                src="/vaca-perfil.jpeg" 
+                src={`${basePath}/vaca-perfil.jpeg`} 
                 alt="Vaca leiteira" 
                 fill 
                 className="object-cover" 
               />
             </div>
             <div className="absolute bottom-6 left-0 w-full text-center">
-              {/* Usando uma fonte cursiva padrão do sistema para imitar caneta */}
               <p className="text-2xl font-bold text-stone-800" style={{ fontFamily: '"Comic Sans MS", "Chalkboard SE", cursive, sans-serif' }}>
                 Funcionária do Mês
               </p>
