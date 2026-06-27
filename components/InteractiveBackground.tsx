@@ -1,20 +1,19 @@
 import React from 'react';
+import Image from 'next/image';
+
+import bgImage from '../public/background.jpeg'; 
 
 export default function InteractiveBackground() {
-  // Puxa o prefixo '/junior-moraes' em produção, ou deixa vazio no localhost
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-
   return (
-    <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden bg-stone-100">
-      <div 
-        className="absolute inset-0 opacity-25"
-        style={{
-          // Agora ele monta o caminho correto dinamicamente!
-          backgroundImage: `url('${basePath}/background.jpeg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
+    // Voltamos para o bg-stone-100 (fundo claro original)
+    <div className="fixed inset-0 pointer-events-none -z-10 bg-stone-100">
+      <Image
+        src={bgImage}
+        alt="Textura de Fundo"
+        fill
+        priority
+        // Se ainda achar muito clara/desbotada, mude o opacity-40 para opacity-100
+        className="object-cover opacity-40"
       />
     </div>
   );
