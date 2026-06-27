@@ -6,8 +6,8 @@ interface WhatsAppBtnProps {
 }
 
 export default function WhatsAppBtn({ text, className = '' }: WhatsAppBtnProps) {
-  // Substitua o número abaixo pelo seu número real
-  const numeroWhatsApp = "5564999999999"; 
+  // Número atualizado
+  const numeroWhatsApp = "556499872277"; 
   const mensagem = encodeURIComponent("Olá! Gostaria de conversar sobre o fornecimento de leite fresco.");
   const link = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
 
