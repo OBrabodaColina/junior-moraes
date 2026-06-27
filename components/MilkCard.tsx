@@ -18,24 +18,23 @@ export default function MilkCard({ children, className = '' }: MilkCardProps) {
       let gamma = event.gamma || 0; 
       let beta = event.beta || 0;
       
-      // Limite de inclinação
-      if (gamma > 60) gamma = 60;
-      if (gamma < -60) gamma = -60;
+      // LIMITADOR DO LÍQUIDO: Permitimos inclinação de apenas 12 graus 
+      if (gamma > 12) gamma = 12;
+      if (gamma < -12) gamma = -12;
       
-      // Na vida real, o líquido gira no sentido CONTRÁRIO à inclinação do copo 
-      // para se manter reto em relação ao chão. Por isso o valor é negativo.
       setTilt(-gamma); 
 
-      // Brilho do vidro
-      const gx = Math.min(Math.max(((gamma + 60) / 120) * 100, 0), 100);
+      // O brilho do vidro (glare) continua livre
+      const gx = Math.min(Math.max(((event.gamma || 0) + 60) / 120 * 100, 0), 100);
       const gy = Math.min(Math.max(((beta + 60) / 120) * 100, 0), 100);
       setGlare({ x: gx, y: gy });
     };
 
     // Sensor de mouse para desktop
     const handleMouseMove = (event: MouseEvent) => {
-      const x = (event.clientX / window.innerWidth - 0.5) * 80;
-      setTilt(-x); // Líquido reage ao mouse
+      // LIMITADOR DO MOUSE: max 12 ou -12
+      const x = (event.clientX / window.innerWidth - 0.5) * 24; 
+      setTilt(-x);
 
       const gx = (event.clientX / window.innerWidth) * 100;
       const gy = (event.clientY / window.innerHeight) * 100;
@@ -69,28 +68,22 @@ export default function MilkCard({ children, className = '' }: MilkCardProps) {
       />
       <div className="absolute top-0 left-[10%] w-[80%] h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90 z-20 pointer-events-none blur-[1px]" />
 
-      {/* Recipiente do Líquido Plano (Gira com o Giroscópio) */}
+      {/* Recipiente do Líquido Plano (Leite Branco Sólido) */}
       <motion.div 
-        className="absolute bg-white/10 backdrop-blur-md pointer-events-none z-0"
+        // Aqui voltamos para bg-white, já que o seu texto escuro vai contrastar perfeitamente
+        className="absolute left-[-50%] top-[25%] w-[200%] h-[200%] bg-white pointer-events-none z-0"
         style={{ 
-          // Linha sutil no topo para marcar a superfície do líquido
-          borderTop: '2px solid rgba(255, 255, 255, 0.4)',
-          // Aumentamos o tamanho de 200% para 400% para esconder as pontas ("quadrados")
-          width: '400%',
-          height: '400%',
-          left: '-150%',
-          top: '15%',
-          // Previne falhas gráficas no Safari/iOS ao renderizar o blur girando
-          willChange: 'transform'
+          // Linha no topo bem marcada
+          borderTop: '2px solid rgba(255, 255, 255, 1)' 
         }}
         animate={{ 
           rotate: tilt,
-          y: Math.abs(tilt) * 2 // Sobe um pouco mais rápido nas laterais para compensar
+          y: Math.abs(tilt) * 1.5 
         }}
         transition={{ type: 'spring', damping: 20, stiffness: 45 }}
       />
       
-      {/* O Texto e Conteúdo */}
+      {/* O Texto e Conteúdo (Sempre visível por cima de tudo) */}
       <div className="relative z-30 h-full w-full">
         {children}
       </div>
